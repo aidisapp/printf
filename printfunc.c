@@ -6,10 +6,10 @@
  */
 void print_string(char *args)
 {
-  if (!args)
-    write(STDOUT_FILENO, "(nil)", 5);
-  else
-    write(STDOUT_FILENO, args, strlen(args));
+	if (!args)
+		write(STDOUT_FILENO, "(nil)", 5);
+	else
+		write(STDOUT_FILENO, args, strlen(args));
 }
 
 /**
@@ -18,12 +18,12 @@ void print_string(char *args)
  */
 void print_char(char arg)
 {
-  char str[2];
+	char str[2];
 
-  str[0] = arg;
-  str[1] = '\0';
+	str[0] = arg;
+	str[1] = '\0';
 
-  write(STDOUT_FILENO, str, 1);
+	write(STDOUT_FILENO, str, 1);
 }
 
 /**
@@ -31,8 +31,8 @@ void print_char(char arg)
  */
 void print_error(void)
 {
-  write(STDERR_FILENO, "Error: Invalid format\n", 24);
-  exit(EXIT_FAILURE);
+	write(STDERR_FILENO, "Error: Invalid format\n", 24);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -45,50 +45,38 @@ void print_error(void)
 
 int _printf(const char *format, ...)
 {
-  va_list args;
-  int chars = 0;
+	va_list args;
+	int chars;
 
-  if (!format)
-  {
-    print_error();
-  }
+	if (!format)
+		print_error();
 
-  va_start(args, format);
+	va_start(args, format);
 
-  while (*format)
-  {
-    if (*format == '%')
-    {
-      format++;
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			format++;
 
-      if (*format == '%')
-      {
-        write(STDOUT_FILENO, "%", 1);
-      }
-      else
-      {
-        switch (*format)
-        {
-        case 's':
-          print_string(va_arg(args, char *));
-          break;
-        case 'c':
-          print_char(va_arg(args, int));
-          break;
-        default:
-          print_error();
-        }
-      }
-    }
-    else
-    {
-      chars += write(STDOUT_FILENO, format, 1);
-    }
+			if (*format == '%')
+				write(STDOUT_FILENO, "%", 1);
+			else
+			{
+				if (*format == 's')
+					print_string(va_arg(args, char *));
+				else if (*format == 'c')
+					print_char(va_arg(args, int));
+				else
+					print_error();
+			}
+		}
+		else
+			chars += write(STDOUT_FILENO, format, 1);
 
-    format++;
-  }
+		format++;
+	}
 
-  va_end(args);
-
-  return (chars);
+	va_end(args);
+	return (chars);
 }
