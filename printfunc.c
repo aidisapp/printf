@@ -1,4 +1,6 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
 * print_string - Print the string data type
@@ -79,7 +81,7 @@ while (*format)
 {
 	if (*format == '%')
 	{
-	if (strlen(format) == 2)
+	if (strlen(format) == 1)
 		write(STDOUT_FILENO, "%", 1);
 	else
 	{
