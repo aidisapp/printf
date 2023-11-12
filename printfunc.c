@@ -43,18 +43,14 @@ int print_format(char format_spec, va_list args)
 {
 int chars = 0;
 
-switch (format_spec)
-{
-case '%':
+if (format_spec == '%')
 	chars += write(STDOUT_FILENO, "%", 1);
-	break;
-case 's':
+else if (format_spec == 's')
 	chars += print_string(va_arg(args, char *));
-	break;
-case 'c':
+else if (format_spec == 'c')
+{
 	print_char(va_arg(args, int));
 	chars++;
-	break;
 }
 
 return (chars);
@@ -70,6 +66,7 @@ return (chars);
 
 int _printf(const char *format, ...)
 {
+
 va_list args;
 int chars = 0;
 
@@ -81,12 +78,21 @@ va_start(args, format);
 while (*format)
 {
 	if (*format == '%')
-	chars += print_format(*(++format), args);
+	{
+	if (strlen(format) == 2)
+		write(STDOUT_FILENO, "%", 1);
+	else
+	{
+		format++;
+		chars += print_format(*format, args);
+	}
+	}
 	else
 	chars += write(STDOUT_FILENO, format, 1);
+
 	format++;
 }
+
 va_end(args);
 return (chars);
 }
-
