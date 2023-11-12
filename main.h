@@ -10,6 +10,6 @@
 int _printf(const char *format, ...);
 int print_string(char *args);
 void print_char(char arg);
-int print_format(char format_spec, va_list args)
+int print_format(char format_spec, va_list args);
 
 #endif
