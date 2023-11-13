@@ -54,6 +54,8 @@ else if (format_spec == 'c')
 	print_char(va_arg(args, int));
 	chars++;
 }
+else if (format_spec == 'd' || format_spec == 'i')
+	chars += print_number(va_arg(args, int));
 
 return (chars);
 }
