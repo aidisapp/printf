@@ -1,6 +1,10 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <stdarg.h>
+#include <string.h>
+
 
 /**
 * print_string - Print the string data type
@@ -8,31 +12,37 @@
 *
 * Return: formatted strings or nil
 */
+
 int print_string(char *args)
 {
-int chars = 0;
+	int chars;
 
-if (!args)
-	chars = write(STDOUT_FILENO, "(null)", 6);
-else
-	chars = write(STDOUT_FILENO, args, strlen(args));
+	chars = 0;
 
-return (chars);
+	if (!args)
+		chars = write(STDOUT_FILENO, "(null)", 6);
+	else
+		chars = write(STDOUT_FILENO, args, strlen(args));
+
+	return (chars);
 }
+
 
 /**
 * print_char - Print the char data type
 * @arg: variadic list char
 */
+
 void print_char(char arg)
 {
-char str[2];
+	char str[2];
 
-str[0] = arg;
-str[1] = '\0';
+	str[0] = arg;
+	str[1] = '\0';
 
-write(STDOUT_FILENO, str, 1);
+	write(STDOUT_FILENO, str, 1);
 }
+
 
 /**
 * print_format - function to print the format string or error
@@ -41,24 +51,39 @@ write(STDOUT_FILENO, str, 1);
 *
 * Return: formatted string or error
 */
+
 int print_format(char format_spec, va_list args)
 {
-int chars = 0;
+	int chars;
 
-if (format_spec == '%')
-	chars += write(STDOUT_FILENO, "%", 1);
-else if (format_spec == 's')
-	chars += print_string(va_arg(args, char *));
-else if (format_spec == 'c')
-{
-	print_char(va_arg(args, int));
-	chars++;
-}
-else if (format_spec == 'd' || format_spec == 'i')
-	chars += print_number(va_arg(args, int));
+	chars = 0;
 
-return (chars);
+	if (format_spec == '%')
+	{
+		chars += write(STDOUT_FILENO, "%", 1);
+	}
+	else if (format_spec == 's')
+	{
+		chars += print_string(va_arg(args, char *));
+	}
+	else if (format_spec == 'c')
+	{
+		print_char(va_arg(args, int));
+		chars++;
+	}
+	else if (format_spec == 'd' || format_spec == 'i')
+	{
+		chars += print_number(va_arg(args, int));
+	}
+	else
+	{
+		chars += write(STDOUT_FILENO, "%", 1);
+		chars += write(STDOUT_FILENO, &format_spec, 1);
+	}
+
+	return (chars);
 }
+
 
 /**
 * _printf - a function that produces output according to a format.
@@ -70,33 +95,37 @@ return (chars);
 
 int _printf(const char *format, ...)
 {
+	va_list args;
 
-va_list args;
-int chars = 0;
+	int chars;
 
-if (!format)
-	return (-1);
+	chars = 0;
 
-va_start(args, format);
+	if (!format)
+		return (-1);
 
-while (*format)
-{
-	if (*format == '%')
+	va_start(args, format);
+
+	while (*format)
 	{
-	if (strlen(format) == 1)
-		write(STDOUT_FILENO, "%", 1);
-	else
-	{
+		if (*format == '%')
+		{
+			if (strlen(format) == 1)
+				chars += write(STDOUT_FILENO, "%", 1);
+			else
+			{
+				format++;
+				chars += print_format(*format, args);
+			}
+		}
+		else
+		{
+			chars += write(STDOUT_FILENO, format, 1);
+		}
+
 		format++;
-		chars += print_format(*format, args);
 	}
-	}
-	else
-	chars += write(STDOUT_FILENO, format, 1);
 
-	format++;
-}
-
-va_end(args);
-return (chars);
+	va_end(args);
+	return (chars);
 }
