@@ -2,10 +2,10 @@
 #include <stdarg.h>
 
 /**
- * print_number - Print integer numbers
- * @b: Integer to be printed
+ * print_number - this function prints integer numbers
+ * @b: this is the integer to be printed
  *
- * Return: Number of characters printed
+ * Return: will have to be the number of characters printed
  */
 
 int print_number(int b)
@@ -14,8 +14,15 @@ int print_number(int b)
 	int chars;
 	int a;
 
+	a = 0;
+
 	chars = 0;
 
+	if (b == 0)
+	{
+		chars += _putchar('0');
+		return (chars);
+	}
 
 	if (b < 0)
 	{
@@ -23,11 +30,6 @@ int print_number(int b)
 		b = -b;
 	}
 
-	if (b == 0)
-		chars += _putchar('0');
-
-
-	a = 0;
 	while (b != 0)
 	{
 		prn[a++] = b % 10 + '0';
@@ -35,7 +37,9 @@ int print_number(int b)
 	}
 
 	while (--a >= 0)
+	{
 		chars += _putchar(prn[a]);
+	}
 
 	return (chars);
 }
