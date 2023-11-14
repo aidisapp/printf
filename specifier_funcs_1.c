@@ -10,6 +10,12 @@ int print_binary(va_list args)
 	unsigned int num = va_arg(args, unsigned int);
 	int chars = 0, found = 0, i;
 
+	if (num == 0)
+	{
+		chars += write(1, "0", 1);
+		return (chars);
+	}
+
 	for (i = sizeof(unsigned int) * 8 - 1; i >= 0; i--)
 	{
 		if ((num >> i) & 1)
