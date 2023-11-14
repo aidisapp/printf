@@ -19,7 +19,6 @@ spc_t spc_arr[] = {
 int count;
 
 for (count = 0; spc_arr[count].c != NULL; count++)
-
 {
 	if (str == spc_arr[count].c[0])
 	{
@@ -40,9 +39,7 @@ return (NULL);
 
 int _printf(const char *format, ...)
 {
-
-int count = 0, i = 0;
-
+int chars = 0, count = 0;
 int (*formatter)(va_list);
 
 va_list args;
@@ -53,32 +50,32 @@ if (!format || (format[0] == '%' && !format[1]))
 if (format[0] == '%' && format[1] == ' ' && !format[2])
 	return (-1);
 
-while (format[i] != '\0')
+while (format[count] != '\0')
 {
-	if (format[i] == '%')
+	if (format[count] == '%')
 	{
-	if (format[i + 1] == '%')
+	if (format[count + 1] == '%')
 	{
-		count += write(1, "%", 1);
-		i += 2;
+		chars += write(1, "%", 1);
+		count += 2;
 	}
 	else
 	{
-		formatter = spc_func_ptr(format[i + 1]);
+		formatter = spc_func_ptr(format[count + 1]);
 		if (formatter)
-		count += formatter(args);
+		chars += formatter(args);
 		else
-		count += write(1, &format[i], 2);
-		i += 2;
+		chars += write(1, &format[count], 2);
+		count += 2;
 	}
 	}
 	else
 	{
-	count += write(1, &format[i], 1);
-	i++;
+	chars += write(1, &format[count], 1);
+	count++;
 	}
 }
 
 va_end(args);
-return (count);
+return (chars);
 }

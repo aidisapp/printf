@@ -16,9 +16,7 @@ return (_putchar(va_arg(args, int)));
 */
 int print_string(va_list args)
 {
-
 char *str = va_arg(args, char *);
-
 int chars = 0, i;
 
 if (!str)
@@ -42,7 +40,6 @@ return (chars);
 int print_percentage(va_list args)
 {
 int chars = 0;
-
 char *str = "%";
 
 if (va_arg(args, int) == *str)
@@ -69,9 +66,7 @@ if (num < 0)
 	char_count += write(1, "-", 1);
 }
 else
-{
 	abs_val = num;
-}
 
 divisor = abs_val;
 dig_count = 1;
@@ -101,4 +96,3 @@ int print_int(va_list args)
 {
 return (print_dec_int(args));
 }
-
