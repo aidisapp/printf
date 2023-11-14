@@ -1,130 +1,84 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdarg.h>
-#include <string.h>
-
 
 /**
-* print_string - Print the string data type
-* @args: variadic list of strings
+* spc_func_ptr - function to return a function pointer to a
+* function accociated with the specifier
+* @str: variable to the function
+* Return: specified function
+*/
+int (*spc_func_ptr(char str))(va_list)
+{
+spc_t spc_arr[] = {
+	{"c", print_char},
+	{"s", print_string},
+	{"%", print_percentage},
+	{"d", print_dec_int},
+	{"i", print_int},
+	{NULL, NULL}};
+
+int count;
+
+for (count = 0; spc_arr[count].c != NULL; count++)
+
+{
+	if (str == spc_arr[count].c[0])
+	{
+	return (spc_arr[count].func_ptr);
+	}
+}
+
+return (NULL);
+}
+
+/**
+* _printf - a function that produces output according to a format.
+* @format: List of types of arguments being passed
+* @...: List of types of arguments being passed
 *
-* Return: formatted strings or nil
+* Return: the formatted output string, or error if format is null.
 */
-
-int print_string(char *args)
-{
-	int chars;
-
-	chars = 0;
-
-	if (!args)
-		chars = write(STDOUT_FILENO, "(null)", 6);
-	else
-		chars = write(STDOUT_FILENO, args, strlen(args));
-
-	return (chars);
-}
-
-
-/**
-* print_char - Print the char data type
-* @arg: variadic list char
-*/
-
-void print_char(char arg)
-{
-	char str[2];
-
-	str[0] = arg;
-	str[1] = '\0';
-
-	write(STDOUT_FILENO, str, 1);
-}
-
-
-/**
- * print_format - function to print the format string or error
- * @format_spec: Format string specifier
- * @args: variadic list format string
- * Return: formatted string or error
- */
-int print_format(char format_spec, va_list args)
-{
-	int chars = 0;
-
-	char *str, character;
-
-	if (format_spec == '%')
-		chars += write(STDOUT_FILENO, "%", 1);
-	else if (format_spec == 's')
-	{
-		str = va_arg(args, char *);
-		if (str == NULL)
-			chars += write(STDOUT_FILENO, "(null)", 6);
-		else
-			chars += write(STDOUT_FILENO, str, strlen(str));
-	}
-	else if (format_spec == 'c')
-	{
-		character = va_arg(args, int);
-		chars += write(STDOUT_FILENO, &character, 1);
-	}
-	else if (format_spec == 'd' || format_spec == 'i')
-	{
-		chars += print_number(va_arg(args, int));
-	}
-	else
-	{
-		chars += write(STDOUT_FILENO, "%", 1);
-		chars += write(STDOUT_FILENO, &format_spec, 1);
-	}
-	return (chars);
-}
-
-
-/**
- * _printf - a function that produces output according to a format.
- * @format: List of types of arguments being passed
- * @...: List of types of arguments being passed
- *
- * Return: the formatted output string, or error if format is null.
- */
 
 int _printf(const char *format, ...)
 {
-	va_list args;
 
-	int chars;
+int count = 0, i = 0;
 
-	chars = 0;
+int (*formatter)(va_list);
 
-	if (!format)
-		return (-1);
+va_list args;
+va_start(args, format);
 
-	va_start(args, format);
+if (!format || (format[0] == '%' && !format[1]))
+	return (-1);
+if (format[0] == '%' && format[1] == ' ' && !format[2])
+	return (-1);
 
-	while (*format)
+while (format[i] != '\0')
+{
+	if (format[i] == '%')
 	{
-		if (*format == '%')
-		{
-			if (strlen(format) == 1)
-				chars += write(STDOUT_FILENO, "%", 1);
-			else
-			{
-				format++;
-				chars += print_format(*format, args);
-			}
-		}
-		else
-		{
-			chars += write(STDOUT_FILENO, format, 1);
-		}
-
-		format++;
+	if (format[i + 1] == '%')
+	{
+		count += write(1, "%", 1);
+		i += 2;
 	}
+	else
+	{
+		formatter = spc_func_ptr(format[i + 1]);
+		if (formatter)
+		count += formatter(args);
+		else
+		count += write(1, &format[i], 2);
+		i += 2;
+	}
+	}
+	else
+	{
+	count += write(1, &format[i], 1);
+	i++;
+	}
+}
 
-	va_end(args);
-	return (chars);
+va_end(args);
+return (count);
 }

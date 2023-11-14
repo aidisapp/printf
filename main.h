@@ -7,11 +7,25 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+/**
+* struct specifier - structure definition for specifier and function pointers.
+* @c: the specifier character, passed after the % symbol.
+* @func_ptr: the functions associated to the specifier.
+*/
+typedef struct specifier
+{
+char *c;
+int (*func_ptr)(va_list);
+} spc_t;
+
 int _printf(const char *format, ...);
-int print_string(char *args);
-void print_char(char arg);
-int print_format(char format_spec, va_list args);
 int _putchar(char c);
-int print_number(int n);
+
+int print_char(va_list args);
+int print_string(va_list args);
+int print_percentage(va_list args);
+int print_dec_int(va_list args);
+int print_int(va_list args);
 
 #endif
+
