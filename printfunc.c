@@ -14,6 +14,7 @@ spc_t spc_arr[] = {
 	{"%", print_percentage},
 	{"d", print_dec_int},
 	{"i", print_int},
+	{"b", print_binary},
 	{NULL, NULL}};
 
 int count;
@@ -21,9 +22,7 @@ int count;
 for (count = 0; spc_arr[count].c != NULL; count++)
 {
 	if (str == spc_arr[count].c[0])
-	{
 	return (spc_arr[count].func_ptr);
-	}
 }
 
 return (NULL);
