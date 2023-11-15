@@ -7,7 +7,7 @@
  *
  * Return: On success, it returns the character written as an
  *
- * unsigned char cast to an int
+ * unsigned char that is casted to an int
  *
  * On error, returns -1 and sets errno accordingly.
  */
