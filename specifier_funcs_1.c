@@ -153,4 +153,3 @@ int print_hex_upper(va_list args)
 
 	return (char_count);
 }
-
