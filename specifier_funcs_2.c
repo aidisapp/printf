@@ -15,7 +15,7 @@ int print_str_ASCII(va_list args)
 	const char *our_str = va_arg(args, const char *);
 	int char_count = 0;
 
-	if (!our_str)
+	if (our_str == NULL)
 	{
 		char_count += write(1, "(null)", 6);
 		return (char_count);
@@ -35,7 +35,10 @@ int print_str_ASCII(va_list args)
 			hex[3] = ((*our_str % 16 < 10) ? '0' : 'A' - 10);
 			char_count += write(1, hex, 4);
 		}
-		our_str++;
+		else
+		{
+			our_str++;
+		}
 	}
 
 	return (char_count);
