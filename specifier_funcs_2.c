@@ -35,10 +35,7 @@ int print_str_ASCII(va_list args)
 			hex[3] = ((*our_str % 16 < 10) ? '0' : 'A' - 10);
 			char_count += write(1, hex, 4);
 		}
-		else
-		{
-			our_str++;
-		}
+		our_str++;
 	}
 
 	return (char_count);
