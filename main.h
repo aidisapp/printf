@@ -12,6 +12,7 @@
 * @c: the specifier character, passed after the % symbol.
 * @func_ptr: the functions associated to the specifier.
 */
+
 typedef struct specifier
 {
 char *c;
@@ -33,4 +34,3 @@ int print_hex_lower(va_list args);
 int print_hex_upper(va_list args);
 
 #endif
-
