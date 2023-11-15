@@ -41,3 +41,52 @@ int print_str_ASCII(va_list args)
 
 	return (char_count);
 }
+
+/**
+* print_pointer - Function to print pointer (%p)
+* @args: values from the variable arguement list
+* Return: the unsigned integer value
+*/
+int print_pointer(va_list args)
+{
+void *ptr = va_arg(args, void *);
+unsigned long int address, remainder;
+int count;
+
+if (ptr == NULL)
+{
+	_putchar('(');
+	_putchar('n');
+	_putchar('i');
+	_putchar('l');
+	_putchar(')');
+	return (5);
+}
+
+address = (unsigned long int)ptr;
+count = 0;
+
+_putchar('0');
+_putchar('x');
+
+if (address == 0)
+{
+	_putchar('0');
+	count++;
+}
+
+while (address != 0)
+{
+	remainder = address % 16;
+
+	if (remainder < 10)
+	_putchar(remainder + '0');
+	else
+	_putchar(remainder - 10 + 'A');
+
+	address /= 16;
+	count++;
+}
+
+return (count + 2);
+}

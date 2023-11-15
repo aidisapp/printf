@@ -20,6 +20,7 @@ spc_t spc_arr[] = {
 	{"x", print_hex_lower},
 	{"X", print_hex_upper},
 	{"S", print_str_ASCII},
+	{"p", print_pointer},
 	{NULL, NULL}};
 
 int count;
