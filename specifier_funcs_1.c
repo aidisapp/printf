@@ -64,3 +64,93 @@ int print_unsigned(va_list args)
 	return (char_count);
 }
 
+/**
+ * print_octal - Function to print octal (%o)
+ * @args: numbers from the variable arguement list
+ * Return: the unsigned integer value
+ */
+int print_octal(va_list args)
+{
+	unsigned int num = va_arg(args, unsigned int);
+	unsigned int abs_val, divisor, dig_count, char_count = 0;
+
+	abs_val = num;
+	divisor = abs_val;
+	dig_count = 1;
+
+	while (divisor > 7)
+	{
+		divisor /= 8;
+		dig_count *= 8;
+	}
+
+	while (dig_count >= 1)
+	{
+		char_count += _putchar(((abs_val / dig_count) % 8) + '0');
+		dig_count /= 8;
+	}
+
+	return (char_count);
+}
+
+/**
+ * print_hex_lower - Function to print hex in lowercase (%x)
+ * @args: numbers from the variable arguement list
+ * Return: the unsigned integer value
+ */
+int print_hex_lower(va_list args)
+{
+	unsigned int num = va_arg(args, unsigned int);
+	unsigned int abs_val, divisor, dig_count, char_count = 0;
+
+	abs_val = num;
+	divisor = abs_val;
+	dig_count = 1;
+
+	while (divisor > 15)
+	{
+		divisor /= 16;
+		dig_count *= 16;
+	}
+
+	while (dig_count >= 1)
+	{
+		char_count += _putchar(((abs_val / dig_count) % 16) +
+													 ((abs_val / dig_count) % 16 < 10 ? '0' : 'a' - 10));
+		dig_count /= 16;
+	}
+
+	return (char_count);
+}
+
+/**
+ * print_hex_upper - Function to print hex in uppercase (%X)
+ * @args: numbers from the variable arguement list
+ * Return: the unsigned integer value
+ */
+int print_hex_upper(va_list args)
+{
+	unsigned int num = va_arg(args, unsigned int);
+	unsigned int abs_val, divisor, dig_count, char_count = 0;
+
+	abs_val = num;
+
+	divisor = abs_val;
+	dig_count = 1;
+
+	while (divisor > 15)
+	{
+		divisor /= 16;
+		dig_count *= 16;
+	}
+
+	while (dig_count >= 1)
+	{
+		char_count += _putchar(((abs_val / dig_count) % 16) +
+		((abs_val / dig_count) % 16 < 10 ? '0' : 'A' - 10));
+		dig_count /= 16;
+	}
+
+	return (char_count);
+}
+
