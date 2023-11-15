@@ -29,10 +29,11 @@ int print_str_ASCII(va_list args)
 		}
 		else
 		{
-			char hex[5] = "\\x00";
+			char hex[6] = "\\x00";
 
-			hex[2] = ((*our_str / 16 < 10) ? '0' : 'A' - 10);
-			hex[3] = ((*our_str % 16 < 10) ? '0' : 'A' - 10);
+			hex[2] = ((*our_str / 16 < 10) ? '0' : 'A' - 10) + (*our_str / 16 % 16);
+			hex[3] = ((*our_str % 16 < 10) ? '0' : 'A' - 10) + (*our_str % 16);
+			hex[4] = '\0';
 			char_count += write(1, hex, 4);
 		}
 		our_str++;
