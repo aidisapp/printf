@@ -2,7 +2,7 @@
 
 /**
  * print_binary - Function to convert unsigned int to binary
- * @args: numbers from the variable arguement list
+ * @args: numbers from the variable argument list
  * Return: the converted binary representation
  */
 int print_binary(va_list args)

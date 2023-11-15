@@ -19,6 +19,7 @@ spc_t spc_arr[] = {
 	{"o", print_octal},
 	{"x", print_hex_lower},
 	{"X", print_hex_upper},
+	{"S", print_str_ASCII},
 	{NULL, NULL}};
 
 int count;
