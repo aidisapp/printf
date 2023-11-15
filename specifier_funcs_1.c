@@ -8,6 +8,7 @@
 int print_binary(va_list args)
 {
 	unsigned int num = va_arg(args, unsigned int);
+
 	int chars = 0, found = 0, i;
 
 	if (num == 0)
@@ -17,6 +18,7 @@ int print_binary(va_list args)
 	}
 
 	for (i = sizeof(unsigned int) * 8 - 1; i >= 0; i--)
+
 	{
 		if ((num >> i) & 1)
 		{
@@ -32,3 +34,33 @@ int print_binary(va_list args)
 
 	return (chars);
 }
+
+/**
+ * print_unsigned - Function to Print unsigned decimal (%u)
+ * @args: numbers from the variable arguement list
+ * Return: the unsigned integer value
+ */
+int print_unsigned(va_list args)
+{
+	unsigned int num = va_arg(args, unsigned int);
+	unsigned int abs_val, divisor, dig_count, char_count = 0;
+
+	abs_val = num;
+	divisor = abs_val;
+	dig_count = 1;
+
+	while (divisor > 9)
+	{
+		divisor /= 10;
+		dig_count *= 10;
+	}
+
+	while (dig_count >= 1)
+	{
+		char_count += _putchar(((abs_val / dig_count) % 10) + '0');
+		dig_count /= 10;
+	}
+
+	return (char_count);
+}
+

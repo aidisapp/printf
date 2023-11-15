@@ -15,6 +15,7 @@ spc_t spc_arr[] = {
 	{"d", print_dec_int},
 	{"i", print_int},
 	{"b", print_binary},
+	{"u", print_unsigned},
 	{NULL, NULL}};
 
 int count;
@@ -35,10 +36,10 @@ return (NULL);
 *
 * Return: the formatted output string, or error if format is null.
 */
-
 int _printf(const char *format, ...)
 {
 int chars = 0, count = 0;
+
 int (*formatter)(va_list);
 
 va_list args;
@@ -78,3 +79,4 @@ while (format[count] != '\0')
 va_end(args);
 return (chars);
 }
+
