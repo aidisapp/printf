@@ -79,7 +79,7 @@ while (address != 0)
 	else
 	hex[count] = remainder - 10 + 'a';
 
-i	address /= 16;
+	address /= 16;
 	count++;
 }
 for (i = count - 1; i >= 0; i--)
@@ -102,7 +102,9 @@ int print_integer_positive(va_list args)
 	int pos_int;
 
 	pos_int = 0;
-	int *int_ptr = va_arg(args, int *);
+	int *int_ptr;
+
+	*int_ptr = va_arg(args, int *);
 
 	if (int_ptr == NULL)
 	{
@@ -112,11 +114,11 @@ int print_integer_positive(va_list args)
 	if (*int_ptr >= 0)
 	{
 		pos_int += _putchar('+');
-		pos_int += prnt_dec_int(*int_ptr);
+		pos_int += print_dec_int(*int_ptr);
 	}
 	else
 	{
-		pos_int += prnt_dec_int(*int_ptr);
+		pos_int += print_dec_int(*int_ptr);
 	}
 
 	return (pos_int);
@@ -144,13 +146,13 @@ int print_space_str(va_list args)
 	int spc_width = va_arg(args, int);
 	char *strng = va_arg(args, char *);
 
-	if (str == NULL)
+	if (strng == NULL)
 	{
 		space += write(1, "(null)", 6);
 		return (space);
 	}
 
-	while (str[str_space] != '\0')
+	while (strng[str_space] != '\0')
 	{
 		str_space++;
 	}
