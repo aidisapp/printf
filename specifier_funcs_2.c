@@ -86,4 +86,3 @@ for (i = count - 1; i >= 0; i--)
 _putchar(hex[i]);
 return (count + 2);
 }
-
