@@ -41,7 +41,7 @@ return (char_count);
 
 /**
 * print_pointer - Function to print pointer (%p)
-* @args: values from the variable arguement list
+* @args: values from the variable argument list
 * Return: the unsigned integer value
 */
 int print_pointer(va_list args)
@@ -79,10 +79,127 @@ while (address != 0)
 	else
 	hex[count] = remainder - 10 + 'a';
 
-	address /= 16;
+i	address /= 16;
 	count++;
 }
 for (i = count - 1; i >= 0; i--)
 _putchar(hex[i]);
 return (count + 2);
+}
+
+/**
+ * print_integer_positive - this function is made to handle
+ *
+ * the positive integer cases
+ *
+ * @args: these are arguments from the argument list (variable)
+ *
+ * Return: the positive integer value
+ */
+
+int print_integer_positive(va_list args)
+{
+	int pos_int;
+
+	pos_int = 0;
+	int *int_ptr = va_arg(args, int *);
+
+	if (int_ptr == NULL)
+	{
+		return (write(1, "(null)", 6));
+	}
+
+	if (*int_ptr >= 0)
+	{
+		pos_int += _putchar('+');
+		pos_int += prnt_dec_int(*int_ptr);
+	}
+	else
+	{
+		pos_int += prnt_dec_int(*int_ptr);
+	}
+
+	return (pos_int);
+}
+
+
+/**
+ * print_space_str - this function is made to handle
+ *
+ * the space or string padding
+ *
+ * @args: these are the arguments from the argument list (variable)
+ *
+ * Return: the positive integer value
+ */
+
+int print_space_str(va_list args)
+{
+	int space, str_space, spacing;
+
+	str_space = 0;
+
+	space = 0;
+
+	int spc_width = va_arg(args, int);
+	char *strng = va_arg(args, char *);
+
+	if (str == NULL)
+	{
+		space += write(1, "(null)", 6);
+		return (space);
+	}
+
+	while (str[str_space] != '\0')
+	{
+		str_space++;
+	}
+	spacing = (str_space < space) ? (space - str_space) : 0;
+
+	while (spacing > 0)
+	{
+		space += write(1, " ", 1);
+		spacing--;
+	}
+
+	return (space);
+}
+
+/**
+ * print_hash_specifier - this function is made to handle
+ *
+ * the printing of the hash flags
+ *
+ * @args: these are the arguments from the argument list (variable)
+ *
+ * Return: this will be the "#" flag
+ */
+
+int print_hash_specifier(va_list args)
+{
+	int hash;
+
+	hash = 0;
+	char *str = va_arg(args, char *);
+
+	if (str == NULL)
+	{
+		hash += write(1, "(null)", 6);
+		return (hash);
+	}
+
+	while (*str != '\0')
+	{
+		if (*str >= 'a' && *str <= 'z')
+		{
+			hash += write(1, &(*str - ('a' - 'A')), 1);
+		}
+		else
+		{
+			hash += write(1, str, 1);
+		}
+		str++;
+	}
+
+	return (hash);
 }
