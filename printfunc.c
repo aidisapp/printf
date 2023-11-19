@@ -21,9 +21,6 @@ spc_t spc_arr[] = {
 	{"X", print_hex_upper},
 	{"S", print_str_ASCII},
 	{"p", print_pointer},
-	{"+", print_integer_positive},
-	{" ", print_space_str},
-	{"#", print_hash_specifier},
 	{NULL, NULL}};
 
 int count;
