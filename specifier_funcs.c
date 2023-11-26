@@ -9,11 +9,14 @@ int print_char(va_list args)
 {
 return (_putchar(va_arg(args, int)));
 }
+
 /**
 * print_string - function to print strings
 * @args: string to print from the variable argument list
 * Return: strings to print
+*
 */
+
 int print_string(va_list args)
 {
 char *str = va_arg(args, char *);
@@ -37,6 +40,7 @@ return (chars);
 * Return: if % is passed after the specifier
 *
 */
+
 int print_percentage(va_list args)
 {
 int chars = 0;
@@ -55,6 +59,7 @@ return (chars);
 * @args: decimal argument from the variable list arguement
 * Return: counter
 */
+
 int print_dec_int(va_list args)
 {
 int num = va_arg(args, int);
